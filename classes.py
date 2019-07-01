@@ -1,14 +1,11 @@
-class Animals:
-    name = 'unknown'  # Animal name
-    voice = 'unknown'  # Animal's voice
-    need_for_food = 'голодный'  # Need for food
-    weight = 0  # Animal's weight, kg
+class Animal:
+    name = 'unknown'
+    voice = 'unknown'
+    need_for_food = 'голодный'
+    weight = 0
 
     def __init__(self, name='unknown'):
         self.name = name
-
-    # def givname(self):
-    #     self.name = input('Enter mame: ')
 
     def feed(self):
         self.need_for_food = 'накормлен'
@@ -18,9 +15,9 @@ class Animals:
 
 
 
-class Birds(Animals):
-    eggs = 0  # Count of eggs
-    need_for_eggs = 'яйца не собраны'  # Eggs gathered or not
+class Bird(Animal):
+    eggs = 0
+    need_for_eggs = 'яйца не собраны'
 
     def gather_eggs(self):
         self.need_for_eggs = 'яйца собраны'
@@ -29,57 +26,57 @@ class Birds(Animals):
         self.eggs += value
 
 
-class Geese(Birds):
+class Goose(Bird):
     pass
 
-goose1 = Geese('Серый')
-goose2 = Geese('Белый')
+goose1 = Goose('Серый')
+goose2 = Goose('Белый')
 goose1.weigh(11)
 goose2.weigh(10)
 
-class Ducks(Birds):
+class Duck(Bird):
     pass
 
-duck1 = Ducks('Кря-кря')
+duck1 = Duck('Кря-кря')
 duck1.weigh(9)
 
-class Hens(Birds):
+class Hen(Bird):
     pass
 
-hen1 = Hens('Ко-ко')
-hen2 = Hens('Кукареку')
+hen1 = Hen('Ко-ко')
+hen2 = Hen('Кукареку')
 hen1.weigh(5)
 hen2.weigh(7)
 
-class Cattle(Animals):
-    need_for_milk = 'недояна'  # Cattle milked or not
+class Cattle(Animal):
+    need_for_milk = 'недояна'
 
     def milk(self):
         self.need_for_milk = 'подоена'
 
 
-class Goats(Cattle):
+class Goat(Cattle):
     pass
 
-goat1 = Goats('Рога')
-goat2 = Goats('Копыта')
+goat1 = Goat('Рога')
+goat2 = Goat('Копыта')
 goat1.weigh(35)
 goat2.weigh(37)
 
-class Cows(Cattle):
+class Cow(Cattle):
     pass
 
-cow1 = Cows('Манька')
+cow1 = Cow('Манька')
 cow1.weigh(305)
 
-class Sheeps(Animals):
-    need_for_shear = 'не пострижен'  # Sheeps sheared or not
+class Sheep(Animal):
+    need_for_shear = 'не подстрижен'
 
     def shear(self):
-        self.need_for_shear = 'пострижен'
+        self.need_for_shear = 'подстрижен'
 
-sheep1 = Sheeps('Барашек')
-sheep2 = Sheeps('Кудрявый')
+sheep1 = Sheep('Барашек')
+sheep2 = Sheep('Кудрявый')
 sheep1.weigh(54)
 sheep2.weigh(65)
 
@@ -100,15 +97,6 @@ most_heavy_animal = max(weight_animal_list, key=lambda x: x[1])
 print('Самое тяжёлое животное - ', most_heavy_animal[0],', ' 'вес составляет', max_weight, 'кг', )
 
 
-
-# for item in animal_list:
-#     w = item.weight
-#     print(item.name, w, 'кг')
-
-
-
-# animal_dict = {'animals': animal_list, 'cattle': cattle_list, 'sheeps': sheeps_list, 'birds': birds_list}
-# print(animal_dict)
 
 
 def feed_all(an_list):

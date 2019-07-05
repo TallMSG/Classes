@@ -1,7 +1,9 @@
-class Animal:
+from abc import ABC, abstractmethod
+
+class Animal(ABC):
     name = 'unknown'
-    voice = 'unknown'
     need_for_food = 'голодный'
+    need_for_collect = 'не обслужен'
     weight = 0
 
     def __init__(self, name='unknown'):
@@ -13,119 +15,84 @@ class Animal:
     def weigh(self, value):
         self.weight += value
 
-
+    @abstractmethod
+    def collect(self):
+        pass
 
 class Bird(Animal):
     eggs = 0
-    need_for_eggs = 'яйца не собраны'
 
-    def gather_eggs(self):
-        self.need_for_eggs = 'яйца собраны'
+    def collect(self):
+        self.need_for_collect = 'яйца собраны'
 
     def lay_eggs(self, value):
         self.eggs += value
 
-
-class Goose(Bird):
-    pass
-
-goose1 = Goose('Серый')
-goose2 = Goose('Белый')
-goose1.weigh(11)
-goose2.weigh(10)
-
-class Duck(Bird):
-    pass
-
-duck1 = Duck('Кря-кря')
-duck1.weigh(9)
-
-class Hen(Bird):
-    pass
-
-hen1 = Hen('Ко-ко')
-hen2 = Hen('Кукареку')
-hen1.weigh(5)
-hen2.weigh(7)
-
 class Cattle(Animal):
-    need_for_milk = 'недояна'
 
-    def milk(self):
-        self.need_for_milk = 'подоена'
-
-
-class Goat(Cattle):
-    pass
-
-goat1 = Goat('Рога')
-goat2 = Goat('Копыта')
-goat1.weigh(35)
-goat2.weigh(37)
-
-class Cow(Cattle):
-    pass
-
-cow1 = Cow('Манька')
-cow1.weigh(305)
+    def collect(self):
+        self.need_for_collect = 'подоена'
 
 class Sheep(Animal):
-    need_for_shear = 'не подстрижен'
 
-    def shear(self):
-        self.need_for_shear = 'подстрижен'
+    def collect(self):
+        self.need_for_collect = 'подстрижен'
 
-sheep1 = Sheep('Барашек')
-sheep2 = Sheep('Кудрявый')
-sheep1.weigh(54)
-sheep2.weigh(65)
+
+goose1 = Bird('Гусь Серый')
+goose2 = Bird('Гусь Белый')
+duck1 = Bird('Утка Кря-кря')
+hen1 = Bird('Курица Ко-ко')
+hen2 = Bird('Курица Кукареку')
+goat1 = Cattle('Коза Рога')
+goat2 = Cattle('Коза Копыта')
+cow1 = Cattle('Корова Манька')
+sheep1 = Sheep('Баран Барашек')
+sheep2 = Sheep('Баран Кудрявый')
+
 
 animal_list = [goose1, goose2, duck1, hen1, hen2, goat1, goat2, cow1, sheep1, sheep2]
-cattle_list = [goat1, goat2, cow1]
-sheeps_list = [sheep1, sheep2]
-birds_list = [goose1, goose2, duck1, hen1, hen2]
-
-total_weight = [item.weight for item in animal_list]
-total_name = [item.name for item in animal_list]
-print('Общий вес всех животных', sum(total_weight), 'кг')
-
-weight_animal_list = list(zip(total_name, total_weight))
-
-
-max_weight = max(item.weight for item in animal_list)
-most_heavy_animal = max(weight_animal_list, key=lambda x: x[1])
-print('Самое тяжёлое животное - ', most_heavy_animal[0],', ' 'вес составляет', max_weight, 'кг', )
 
 
 
+def weigh_all(an_list):
+    goose1.weigh(11)
+    goose2.weigh(10)
+    duck1.weigh(9)
+    hen1.weigh(5)
+    hen2.weigh(7)
+    goat1.weigh(35)
+    goat2.weigh(37)
+    cow1.weigh(305)
+    sheep1.weigh(54)
+    sheep2.weigh(65)
 
-def feed_all(an_list):
+    total_name = [item.name for item in an_list]
+    total_weight = [item.weight for item in an_list]
+    print('Общий вес всех животных', sum(total_weight), 'кг')
+
+    weight_animal_list = list(zip(total_name, total_weight))
+    max_weight = max(item.weight for item in an_list)
+    most_heavy_animal = max(weight_animal_list, key=lambda x: x[1])
+    print('Самое тяжёлое животное - ', most_heavy_animal[0], ', ' 'вес составляет', max_weight, 'кг', )
+
+
+
+def serve_all(an_list):
     for item in an_list:
         item.feed()
-        print(item.name, item.need_for_food)
-
-def milk_all(an_list):
-    for item in an_list:
-        item.milk()
-        print(item.name, item.need_for_milk)
-
-def shear_all(an_list):
-    for item in an_list:
-        item.shear()
-        print(item.name, item.need_for_shear)
-
-def gather_eggs_all(an_list):
-    for item in an_list:
-        item.gather_eggs()
-        print(item.name, item.need_for_eggs)
+        item.collect()
+        print(f'Животное: {item.name}')
+        print('Необходимость кормления:', item.need_for_food)
+        print('Необходимость обслуживания:', item.need_for_collect)
+        print()
 
 
 def main():
-    feed_all(animal_list)
-    milk_all(cattle_list)
-    shear_all(sheeps_list)
-    gather_eggs_all(birds_list)
-    print('Все животные обслужены')
+    weigh_all(animal_list)
+    print()
+    serve_all(animal_list)
+    print('Все животные накормлены и обслужены')
 
 
 main()
